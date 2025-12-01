@@ -85,6 +85,8 @@ V = TV_V × (weight/70)
 - Steady-state via exponential decay summation
 - Therapeutic range: 0.5–1.0 ng/mL  
 **Limitations:** No IIV, no Bayesian updating, no distribution phase
+  <img width="966" height="794" alt="image" src="https://github.com/user-attachments/assets/70f64dbd-0595-42c2-a43b-9a1e54a234ac" />
+
 
 ### 🔹 Version 2.0 — Mechanistic PopPK
 - Two-compartment model
@@ -101,12 +103,11 @@ V = TV_V × (weight/70)
 ---
 
 ## 📚 Citation
-
-- Jelliffe RW, Brooker G. A clinically useful method for the determination of digoxin doses and maintenance regimens. J Chronic Dis. 1974;27(1):15-22.
-- Koup JR, Green BL. Clinical pharmacokinetics of digoxin in the elderly. Clin Pharmacokinet. 1980;5(6):531-540.
-- Jusko WJ, Weintraub M., Vore M. Digoxin disposition in obesity. Clin Pharmacol Ther. 1978;24(1):28-35.
-- Brocks DR. The pharmacokinetics of digoxin in the elderly: a review. J Clin Pharm Ther. 2012;37(4):379-385.
-- Aronson JK. Clinical pharmacokinetics of digoxin 1980. Clin Pharmacokinet. 1980;5(2):167-179.
+1. Brocks DR. Pharmacokinetic Considerations for Digoxin in Older Adults. Drugs & Aging. 2012.
+2. Aronson JK. Digoxin Pharmacokinetics in the Elderly. Br J Clin Pharmacol. 1980.
+3. Koup JR, Jusko WJ. General Pharmacokinetic Model for Digoxin. J Pharmacokinet Biopharm. 1976.
+4. Salcedo-Mingoarranz ÁL et al. Population Pharmacokinetics of Digoxin in Elderly Patients: A Systematic Review. Farm Hosp. 2022.
+5. Zhou X et al. Population Pharmacokinetic Model of Digoxin in Older Chinese Patients. 2016.
 
 
 © 2025 Goyeun Yun. All rights reserved.
