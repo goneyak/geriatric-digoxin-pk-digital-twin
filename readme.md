@@ -90,11 +90,19 @@ V = TV_V × (weight/70)
 
 
 ### 🔹 Version 2.0 — Mechanistic PopPK
-- Two-compartment model
-- PopPK covariate models
-- Inter-individual variability
+- Two-compartment structural model (V1–V2–Q)
+- Captures both distribution (α) and elimination (β) phases
+- PopPK-based covariate equations
+- CL scaled by CrCl and body weight
+- V1/V2 scaled by weight
+- Q with allometric scaling
+- Oral absorption model added (F, Ka)
+- Analytic PK solution (biexponential) for high numerical accuracy
+- Patient vs healthy adult reference overlay
+- Educational dosing suggestion via grid search
+**Limitations:** Approximate literature parameters, simplified IIV structure, no PBPK physiology
 
-<img width="1024" height="1024" alt="image" src="https://github.com/user-attachments/assets/e59d944f-6805-4737-8775-e0a21f4d0167" />
+<img width="800" height="800" alt="image" src="https://github.com/user-attachments/assets/e59d944f-6805-4737-8775-e0a21f4d0167" />
 <img width="962" height="805" alt="image" src="https://github.com/user-attachments/assets/22f45ed3-244c-4277-9c1f-c734ed8edb0f" />
 
 
