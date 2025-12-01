@@ -85,7 +85,8 @@ V = TV_V × (weight/70)
 - Steady-state via exponential decay summation
 - Therapeutic range: 0.5–1.0 ng/mL  
 **Limitations:** No IIV, no Bayesian updating, no distribution phase
-  <img width="966" height="794" alt="image" src="https://github.com/user-attachments/assets/70f64dbd-0595-42c2-a43b-9a1e54a234ac" />
+  
+<img width="1191" height="805" alt="image" src="https://github.com/user-attachments/assets/97250986-8f17-44e9-9890-7f67c3e613a7" />
 
 
 ### 🔹 Version 2.0 — Mechanistic PopPK
