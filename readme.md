@@ -93,8 +93,9 @@ V = TV_V × (weight/70)
 - Two-compartment model
 - PopPK covariate models
 - Inter-individual variability
-- Bayesian MAP updating
-- 95% prediction intervals
+
+<img width="1024" height="1024" alt="image" src="https://github.com/user-attachments/assets/e59d944f-6805-4737-8775-e0a21f4d0167" />
+
 
 ### 🔹 Version 2.5 — Clinical Decision Module
 - P-gp interactions  
