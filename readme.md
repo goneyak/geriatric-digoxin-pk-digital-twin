@@ -1,4 +1,4 @@
-# 💊 Geriatric Digoxin PK Digital Twin
+# Geriatric Digoxin PK Digital Twin
 ### An Explainable, Patient-Specific Pharmacokinetic Simulator for Precision Geriatric Dosing
 
 ## 📖 Overview
@@ -12,7 +12,7 @@ Digoxin has a **Narrow Therapeutic Index (NTI)**. Small concentration increases 
 
 ---
 
-## 🧠 Core Idea
+## Core Idea
 > **One dose does not fit all.**
 
 This tool provides:
@@ -54,14 +54,14 @@ References include findings from Jusko (1978), Koup (1980), Aronson, Brocks, Jel
 
 ---
 
-## 🛠 Tech Stack
+## Tech Stack
 - HTML5 / CSS3 / Vanilla JS
 - Chart.js
 - Serverless client-side architecture
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ```bash
 git clone https://github.com/yourusername/geriatric-digoxin-digitalTwin.git
@@ -71,7 +71,7 @@ open version1.html   # or double-click
 
 ---
 
-## 🧩 Versioned Modeling Assumptions
+## Versioned Modeling Assumptions
 
 ### 🔹 Version 1.0 — Educational PK Model
 - One-compartment IV bolus
