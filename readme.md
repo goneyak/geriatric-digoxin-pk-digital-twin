@@ -114,11 +114,11 @@ Ideal for:
 
 ## 📚 Citation
 
-Jelliffe RW, Brooker G. A clinically useful method for the determination of digoxin doses and maintenance regimens. J Chronic Dis. 1974;27(1):15-22.
-Koup JR, Green BL. Clinical pharmacokinetics of digoxin in the elderly. Clin Pharmacokinet. 1980;5(6):531-540.
-Jusko WJ, Weintraub M., Vore M. Digoxin disposition in obesity. Clin Pharmacol Ther. 1978;24(1):28-35.
-Brocks DR. The pharmacokinetics of digoxin in the elderly: a review. J Clin Pharm Ther. 2012;37(4):379-385.
-Aronson JK. Clinical pharmacokinetics of digoxin 1980. Clin Pharmacokinet. 1980;5(2):167-179.
+- Jelliffe RW, Brooker G. A clinically useful method for the determination of digoxin doses and maintenance regimens. J Chronic Dis. 1974;27(1):15-22.
+- Koup JR, Green BL. Clinical pharmacokinetics of digoxin in the elderly. Clin Pharmacokinet. 1980;5(6):531-540.
+- Jusko WJ, Weintraub M., Vore M. Digoxin disposition in obesity. Clin Pharmacol Ther. 1978;24(1):28-35.
+- Brocks DR. The pharmacokinetics of digoxin in the elderly: a review. J Clin Pharm Ther. 2012;37(4):379-385.
+- Aronson JK. Clinical pharmacokinetics of digoxin 1980. Clin Pharmacokinet. 1980;5(2):167-179.
 
 
 © 2025 Goyeun Yun. All rights reserved.
