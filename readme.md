@@ -66,7 +66,7 @@ References include findings from Jusko (1978), Koup (1980), Aronson, Brocks, Jel
 ```bash
 git clone https://github.com/yourusername/geriatric-digoxin-digitalTwin.git
 cd geriatric-digoxin-digitalTwin
-open index.html   # or double-click
+open version1.html   # or double-click
 ```
 
 ---
