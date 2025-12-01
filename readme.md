@@ -95,6 +95,7 @@ V = TV_V × (weight/70)
 - Inter-individual variability
 
 <img width="1024" height="1024" alt="image" src="https://github.com/user-attachments/assets/e59d944f-6805-4737-8775-e0a21f4d0167" />
+<img width="962" height="805" alt="image" src="https://github.com/user-attachments/assets/22f45ed3-244c-4277-9c1f-c734ed8edb0f" />
 
 
 ### 🔹 Version 2.5 — Clinical Decision Module
