@@ -100,18 +100,6 @@ V = TV_V × (weight/70)
 
 ---
 
-## 🏁 Summary
-A transparent, interpretable Digital Twin for geriatric Digoxin dosing, integrating:
-- Clinical pharmacology
-- PK/PD modeling
-- Explainable AI  
-Ideal for:
-- PhD applications  
-- PK/PD portfolios  
-- Precision medicine research  
-
----
-
 ## 📚 Citation
 
 - Jelliffe RW, Brooker G. A clinically useful method for the determination of digoxin doses and maintenance regimens. J Chronic Dis. 1974;27(1):15-22.
