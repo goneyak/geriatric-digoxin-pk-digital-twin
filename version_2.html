@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Geriatric Digoxin PK Digital Twin (v2.0, PO + Optimizer)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    }
+
+    body {
+      background: #0f172a;
+      color: #e5e7eb;
+      min-height: 100vh;
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .container {
+      max-width: 1200px;
+      width: 100%;
+      background: #020617;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 0;
+      overflow: hidden;
+      border: 1px solid #1f2937;
+    }
+
+    @media (max-width: 900px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .sidebar {
+      background: radial-gradient(circle at top left, #1f2937, #020617);
+      padding: 24px 24px 32px;
+      border-right: 1px solid #1f2937;
+    }
+
+    .main {
+      padding: 24px 28px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.75rem;
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: rgba(56, 189, 248, 0.15);
+      color: #7dd3fc;
+      margin-bottom: 10px;
+    }
+
+    .title {
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .subtitle {
+      font-size: 0.9rem;
+      color: #9ca3af;
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin: 18px 0 8px;
+      color: #e5e7eb;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px 12px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 0.8rem;
+    }
+
+    label {
+      color: #9ca3af;
+    }
+
+    input,
+    select {
+      padding: 6px 8px;
+      max-width: 130px;
+      border-radius: 10px;
+      border: 1px solid #374151;
+      background: rgba(15, 23, 42, 0.85);
+      color: #e5e7eb;
+      font-size: 0.85rem;
+      outline: none;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: #38bdf8;
+      box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.4);
+    }
+
+    .button {
+      width: 100%;
+      margin-top: 18px;
+      padding: 9px 12px;
+      border-radius: 12px;
+      border: none;
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: white;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: transform 0.08s ease, box-shadow 0.08s ease;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 22px rgba(22, 163, 74, 0.45);
+    }
+
+    .button:active {
+      transform: translateY(0);
+      box-shadow: none;
+    }
+
+    .main-top {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .stats-grid {
+      margin-top: 4px;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    @media (max-width: 900px) {
+      .stats-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    .stat-card {
+      background: #020617;
+      border-radius: 14px;
+      border: 1px solid #1f2937;
+      padding: 8px 10px;
+    }
+
+    .stat-label {
+      font-size: 0.7rem;
+      color: #9ca3af;
+      margin-bottom: 3px;
+    }
+
+    .stat-value {
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .stat-tag {
+      font-size: 0.7rem;
+      margin-top: 1px;
+      color: #6b7280;
+    }
+
+    .chart-card {
+      margin-top: 12px;
+      background: radial-gradient(circle at top right, #111827, #020617);
+      border-radius: 16px;
+      border: 1px solid #1f2937;
+      padding: 12px 14px 16px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .chart-title {
+      font-size: 0.9rem;
+      font-weight: 500;
+      margin-bottom: 2px;
+    }
+
+    .chart-subtitle {
+      font-size: 0.75rem;
+      color: #9ca3af;
+    }
+
+    .chart-wrapper {
+      margin-top: 8px;
+      position: relative;
+      height: 320px;
+      width: 100%;
+    }
+
+    footer {
+      font-size: 0.65rem;
+      color: #6b7280;
+      margin-top: 10px;
+    }
+
+    .explain-card {
+      margin-top: 10px;
+      background: #020617;
+      border-radius: 14px;
+      border: 1px solid #1f2937;
+      padding: 10px 12px;
+    }
+
+    .explain-title {
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+      color: #e5e7eb;
+    }
+
+    .explain-body {
+      font-size: 0.8rem;
+      line-height: 1.4;
+      color: #9ca3af;
+    }
+
+    .dose-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 6px;
+      font-size: 0.78rem;
+    }
+
+    .dose-table th,
+    .dose-table td {
+      border-bottom: 1px solid #1f2937;
+      padding: 4px 6px;
+      text-align: center;
+    }
+
+    .dose-table th {
+      color: #e5e7eb;
+      font-weight: 500;
+    }
+
+    .pill-safe {
+      display: inline-block;
+      padding: 2px 6px;
+      border-radius: 999px;
+      font-size: 0.68rem;
+      background: rgba(34, 197, 94, 0.18);
+      color: #bbf7d0;
+    }
+
+    .pill-low {
+      display: inline-block;
+      padding: 2px 6px;
+      border-radius: 999px;
+      font-size: 0.68rem;
+      background: rgba(59, 130, 246, 0.18);
+      color: #bfdbfe;
+    }
+
+    .pill-high {
+      display: inline-block;
+      padding: 2px 6px;
+      border-radius: 999px;
+      font-size: 0.68rem;
+      background: rgba(239, 68, 68, 0.18);
+      color: #fecaca;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="badge">
+        <span>💊 PK Digital Twin</span>
+        <span style="opacity:0.7;">Digoxin · Geriatric · PO</span>
+      </div>
+      <h1 class="title">Geriatric Digoxin PK Digital Twin (v2.0)</h1>
+      <p class="subtitle">
+        Two-compartment PopPK-based simulator for once-daily oral (PO) Digoxin.<br />
+        Compare a frail older adult vs a healthy adult reference.
+      </p>
+
+      <h2 class="section-title">1. Patient Info</h2>
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="age">Age (years)</label>
+          <input id="age" type="number" value="80" />
+        </div>
+        <div class="form-group">
+          <label for="weight">Weight (kg)</label>
+          <input id="weight" type="number" value="55" />
+        </div>
+        <div class="form-group">
+          <label for="sex">Sex</label>
+          <select id="sex">
+            <option value="M">Male</option>
+            <option value="F" selected>Female</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="scr">Serum Creatinine (mg/dL)</label>
+          <input id="scr" type="number" step="0.1" value="1.3" />
+        </div>
+      </div>
+
+      <h2 class="section-title">2. Dosing (PO)</h2>
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="dose">Dose (µg)</label>
+          <input id="dose" type="number" value="62.5" />
+        </div>
+        <div class="form-group">
+          <label for="tau">Interval τ (h)</label>
+          <input id="tau" type="number" value="48" />
+        </div>
+        <div class="form-group">
+          <label for="nDoses">Number of doses</label>
+          <input id="nDoses" type="number" value="5" />
+        </div>
+      </div>
+
+      <button class="button" id="runBtn">
+        ▶ Run Simulation
+      </button>
+    </aside>
+
+    <!-- MAIN AREA -->
+    <main class="main">
+      <div class="main-top">
+        <div>
+          <div class="chart-title">Simulation Summary</div>
+          <div class="chart-subtitle">
+            PopPK-based two-compartment Digoxin model · patient vs healthy adult reference.
+          </div>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-label">CrCl (Cockcroft–Gault)</div>
+            <div class="stat-value" id="crclDisplay">–</div>
+            <div class="stat-tag">mL/min</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Terminal t½ (β-phase)</div>
+            <div class="stat-value" id="thalfDisplay">–</div>
+            <div class="stat-tag">hours</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Cmax,ss (patient)</div>
+            <div class="stat-value" id="cmaxDisplay">–</div>
+            <div class="stat-tag">ng/mL</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Cmin,ss (patient)</div>
+            <div class="stat-value" id="cminDisplay">–</div>
+            <div class="stat-tag">last dosing interval (ng/mL)</div>
+          </div>
+        </div>
+
+        <div class="explain-card">
+          <div class="explain-title">Explainable interpretation</div>
+          <p class="explain-body" id="explainText">
+            Enter patient characteristics and dosing on the left, then click "Run Simulation" to
+            visualize the patient’s Digoxin exposure compared with a healthy adult reference.
+            The steady-state peak (Cmax,ss) and trough (Cmin,ss) will be interpreted relative to a
+            typical therapeutic window (0.5–1.0 ng/mL) for educational purposes only.
+          </p>
+        </div>
+
+        <div class="explain-card">
+          <div class="explain-title">Educational dosing suggestions (PopPK-based)</div>
+          <p class="explain-body">
+            The table below runs an educational grid search over common PO maintenance regimens
+            (62.5–250 µg, every 24–48h) for this patient, using the same PopPK model.
+            Regimens are scored by how well Cmax,ss and Cmin,ss stay within an illustrative
+            0.5–1.0 ng/mL window (toxicity is penalised more than underexposure).
+            <b>This is not medical advice and must not be used for real prescribing.</b>
+          </p>
+          <div id="optTableWrapper" class="explain-body" style="margin-top:6px;"></div>
+        </div>
+      </div>
+
+      <section class="chart-card">
+        <div class="chart-title">Concentration–time curve (repeated PO Digoxin)</div>
+        <div class="chart-subtitle">
+          Shaded band represents an illustrative Digoxin therapeutic window (0.5–1.0 ng/mL).<br />
+          Solid: current patient · Dashed: healthy adult reference.
+        </div>
+
+        <div class="chart-wrapper">
+          <canvas id="pkChart"></canvas>
+        </div>
+      </section>
+
+      <footer>
+        ⚠️ Educational and demo use only. This simulator and the “dose suggestions” do not replace real
+        therapeutic drug monitoring (TDM), clinical judgement, or guideline-based dosing.
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    /****************************************************
+     * 1. Global constants – PopPK (educational)
+     ****************************************************/
+    const THETA_CL  = 6.0;    // L/h (typical adult)
+    const THETA_V1  = 30.0;   // L (central)
+    const THETA_V2  = 470.0;  // L (peripheral)
+    const THETA_Q   = 6.0;    // L/h (inter-comp)
+
+    const THETA_CL_CRCL = 1.0;
+    const THETA_CL_WT   = 0.75;
+    const THETA_V1_WT   = 1.0;
+    const THETA_V2_WT   = 1.0;
+    const THETA_Q_WT    = 0.75;
+
+    const CRCL_REF = 80.0;  // mL/min
+    const WT_REF   = 70.0;  // kg
+
+    // Oral absorption
+    const F_PO = 0.7;   // bioavailability
+    const KA   = 1.0;   // 1/h absorption rate
+
+    // Therapeutic band (illustrative)
+    const THER_LOW  = 0.5;
+    const THER_HIGH = 1.0;
+
+    // Adult reference
+    const REF_AGE = 40;
+    const REF_WT  = 70;
+    const REF_SEX = "M";
+    const REF_SCR = 0.9;
+
+    // Dose optimisation grid (education only)
+    const DOSE_GRID = [62.5, 125, 187.5, 250];  // µg
+    const TAU_GRID  = [24, 36, 48];             // h
+    const N_OPT_DOSES = 15; // for near steady state
+
+    /****************************************************
+     * 2. Creatinine clearance
+     ****************************************************/
+    function creatinineClearance(age, weight, scr, sex) {
+      const factor = sex === "F" ? 0.85 : 1.0;
+      return ((140 - age) * weight * factor) / (72 * scr);
+    }
+
+    /****************************************************
+     * 3. PopPK parameter calculation
+     ****************************************************/
+    function poppkParams(age, weight, sex, scr) {
+      const crcl = creatinineClearance(age, weight, scr, sex);
+
+      const CL = THETA_CL
+        * Math.pow(crcl / CRCL_REF, THETA_CL_CRCL)
+        * Math.pow(weight / WT_REF, THETA_CL_WT);
+
+      const V1 = THETA_V1 * Math.pow(weight / WT_REF, THETA_V1_WT);
+      const V2 = THETA_V2 * Math.pow(weight / WT_REF, THETA_V2_WT);
+      const Q  = THETA_Q  * Math.pow(weight / WT_REF, THETA_Q_WT);
+
+      // Eigenvalues for terminal half-life (β)
+      const k10 = CL / V1;
+      const k12 = Q / V1;
+      const k21 = Q / V2;
+      const alpha_beta_part = Math.sqrt(Math.pow(k10 + k12 + k21, 2) - 4 * k10 * k21);
+      const beta = 0.5 * ((k10 + k12 + k21) - alpha_beta_part); // smaller root
+      const tHalf = Math.log(2) / beta;
+
+      return { CL, V1, V2, Q, crcl, tHalf };
+    }
+
+    /****************************************************
+     * 4. Two-compartment PO simulation (gut -> central)
+     *    Simple Euler integration, dt small
+     ****************************************************/
+    function simulateTwoCompPO(dose, tau, nDoses, CL, V1, V2, Q, dt = 0.05) {
+      const totalTime = tau * nDoses;
+      const t = [];
+      const C = [];
+
+      let Agut = 0;  // amount in gut (µg)
+      let A1   = 0;  // central (µg)
+      let A2   = 0;  // peripheral (µg)
+
+      for (let time = 0; time <= totalTime + 1e-9; time += dt) {
+        // oral dosing at t = 0, tau, 2*tau ...
+        const doseIndex = Math.round(time / tau);
+        const isDoseTime = Math.abs(time - doseIndex * tau) < 1e-6 && doseIndex < nDoses;
+        if (isDoseTime) {
+          Agut += dose * F_PO;
+        }
+
+        // record concentration at current time
+        t.push(time);
+        C.push(A1 / V1);
+
+        // ODEs
+        const dAgut = -KA * Agut;
+        const dA1 = KA * Agut
+          - (CL / V1) * A1
+          - (Q / V1) * A1
+          + (Q / V2) * A2;
+
+        const dA2 = (Q / V1) * A1 - (Q / V2) * A2;
+
+        // Euler step
+        Agut += dAgut * dt;
+        A1   += dA1 * dt;
+        A2   += dA2 * dt;
+      }
+
+      return { t, C };
+    }
+
+    /****************************************************
+     * 5. Exposure summary
+     ****************************************************/
+    function summarizeExposure(t, C, tau) {
+      const cmax = Math.max(...C);
+      const steadyStart = t[t.length - 1] - tau;
+      let cmin = Infinity;
+      for (let i = 0; i < t.length; i++) {
+        if (t[i] >= steadyStart && C[i] < cmin) {
+          cmin = C[i];
+        }
+      }
+      if (!isFinite(cmin)) cmin = Math.min(...C);
+      return { cmax, cmin };
+    }
+
+    /****************************************************
+     * 6. Chart.js init
+     ****************************************************/
+    let chartInstance = null;
+
+    function initChart() {
+      const ctx = document.getElementById("pkChart").getContext("2d");
+      chartInstance = new Chart(ctx, {
+        type: "line",
+        data: {
+          labels: [],
+          datasets: [
+            {
+              label: "Patient",
+              data: [],
+              borderWidth: 3,
+              pointRadius: 0,
+              tension: 0.2,
+              borderColor: "#4ade80"
+            },
+            {
+              label: "Adult reference",
+              data: [],
+              borderWidth: 3,
+              pointRadius: 0,
+              tension: 0.2,
+              borderDash: [6, 4],
+              borderColor: "#38bdf8"
+            },
+            {
+              label: "Therapeutic lower (0.5 ng/mL)",
+              data: [],
+              borderWidth: 1.5,
+              pointRadius: 0,
+              tension: 0,
+              borderDash: [4, 4],
+              borderColor: "rgba(248,113,113,0.9)"
+            },
+            {
+              label: "Therapeutic upper (1.0 ng/mL)",
+              data: [],
+              borderWidth: 1.5,
+              pointRadius: 0,
+              tension: 0,
+              borderDash: [4, 4],
+              borderColor: "rgba(248,113,113,0.9)"
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: {
+              title: {
+                display: true,
+                text: "Time (h)",
+                color: "#9ca3af"
+              },
+              ticks: {
+                color: "#9ca3af",
+                callback: (v) => v.toFixed(0)
+              },
+              grid: {
+                color: "rgba(148,163,184,0.2)"
+              }
+            },
+            y: {
+              min: 0,
+              title: {
+                display: true,
+                text: "Concentration (ng/mL)",
+                color: "#9ca3af"
+              },
+              ticks: {
+                color: "#9ca3af"
+              },
+              grid: {
+                color: "rgba(148,163,184,0.2)"
+              }
+            }
+          },
+          plugins: {
+            legend: {
+              labels: { color: "#e5e7eb" }
+            }
+          }
+        }
+      });
+    }
+
+    function updateChart(t, Cpatient, Cadult) {
+      if (!chartInstance) return;
+      chartInstance.data.labels = t;
+      chartInstance.data.datasets[0].data = Cpatient;
+      chartInstance.data.datasets[1].data = Cadult;
+      chartInstance.data.datasets[2].data = t.map(() => THER_LOW);
+      chartInstance.data.datasets[3].data = t.map(() => THER_HIGH);
+      chartInstance.update();
+    }
+
+    /****************************************************
+     * 7. Dose optimisation scoring & table rendering
+     ****************************************************/
+    function regimenScore(cmax, cmin) {
+      const over  = Math.max(0, (cmax - THER_HIGH) / THER_HIGH);
+      const under = Math.max(0, (THER_LOW - cmin) / THER_LOW);
+      // toxicity penalty ×2
+      return 2 * over + under;
+    }
+
+    function labelRegimen(cmax, cmin) {
+      if (cmax > 2.0) return { text: "Too high (>2 ng/mL)", cls: "pill-high" };
+      if (cmax > THER_HIGH && cmin >= THER_LOW) return { text: "Supratherapeutic peak", cls: "pill-high" };
+      if (cmin < THER_LOW && cmax <= THER_HIGH) return { text: "Subtherapeutic trough", cls: "pill-low" };
+      if (cmin < THER_LOW && cmax > THER_HIGH) return { text: "Peak high & trough low", cls: "pill-high" };
+      return { text: "Within illustrative window", cls: "pill-safe" };
+    }
+
+    function runDoseOptimization(age, weight, sex, scr) {
+      const pk = poppkParams(age, weight, sex, scr);
+      const results = [];
+
+      for (const d of DOSE_GRID) {
+        for (const tau of TAU_GRID) {
+          const sim = simulateTwoCompPO(d, tau, N_OPT_DOSES, pk.CL, pk.V1, pk.V2, pk.Q);
+          const { cmax, cmin } = summarizeExposure(sim.t, sim.C, tau);
+          if (cmax > 2.0) continue; // discard clearly toxic
+          const score = regimenScore(cmax, cmin);
+          results.push({ dose: d, tau, cmax, cmin, score });
+        }
+      }
+
+      results.sort((a, b) => a.score - b.score);
+      return results.slice(0, 3);
+    }
+
+    function renderOptimisationTable(regimens) {
+      const wrapper = document.getElementById("optTableWrapper");
+      if (!regimens || regimens.length === 0) {
+        wrapper.innerHTML = "<i>No educational regimens found within basic safety filters.</i>";
+        return;
+      }
+
+      let html = `<table class="dose-table">
+        <thead>
+          <tr>
+            <th>Rank</th>
+            <th>Dose (µg)</th>
+            <th>τ (h)</th>
+            <th>Cmax,ss</th>
+            <th>Cmin,ss</th>
+            <th>Comment</th>
+          </tr>
+        </thead>
+        <tbody>`;
+
+      regimens.forEach((r, idx) => {
+        const label = labelRegimen(r.cmax, r.cmin);
+        html += `<tr>
+          <td>${idx + 1}</td>
+          <td>${r.dose.toFixed(1)}</td>
+          <td>${r.tau}</td>
+          <td>${r.cmax.toFixed(2)}</td>
+          <td>${r.cmin.toFixed(2)}</td>
+          <td><span class="${label.cls}">${label.text}</span></td>
+        </tr>`;
+      });
+
+      html += "</tbody></table>";
+      wrapper.innerHTML = html;
+    }
+
+    /****************************************************
+     * 8. Main simulation driver
+     ****************************************************/
+    function runSimulation() {
+      const age = parseFloat(document.getElementById("age").value);
+      const weight = parseFloat(document.getElementById("weight").value);
+      const sex = document.getElementById("sex").value;
+      const scr = parseFloat(document.getElementById("scr").value);
+
+      const dose = parseFloat(document.getElementById("dose").value);
+      const tau = parseFloat(document.getElementById("tau").value);
+      const nDoses = parseInt(document.getElementById("nDoses").value, 10);
+
+      if (!isFinite(age) || !isFinite(weight) || !isFinite(scr) ||
+          !isFinite(dose) || !isFinite(tau) || !isFinite(nDoses) ||
+          tau <= 0 || nDoses <= 0) {
+        alert("Please check all input values.");
+        return;
+      }
+
+      const patientPk = poppkParams(age, weight, sex, scr);
+      const simPatient = simulateTwoCompPO(
+        dose, tau, nDoses, patientPk.CL, patientPk.V1, patientPk.V2, patientPk.Q
+      );
+      const { cmax, cmin } = summarizeExposure(simPatient.t, simPatient.C, tau);
+
+      const refPk = poppkParams(REF_AGE, REF_WT, REF_SEX, REF_SCR);
+      const simRef = simulateTwoCompPO(
+        dose, tau, nDoses, refPk.CL, refPk.V1, refPk.V2, refPk.Q
+      );
+
+      // update stats
+      document.getElementById("crclDisplay").textContent = patientPk.crcl.toFixed(1);
+      document.getElementById("thalfDisplay").textContent = patientPk.tHalf.toFixed(1);
+      document.getElementById("cmaxDisplay").textContent = cmax.toFixed(2);
+      document.getElementById("cminDisplay").textContent = cmin.toFixed(2);
+
+      const explain = document.getElementById("explainText");
+      if (cmin < THER_LOW) {
+        explain.textContent =
+          `This patient's steady-state trough (Cmin,ss = ${cmin.toFixed(2)} ng/mL) is below `
+          + `the illustrative therapeutic lower bound (${THER_LOW} ng/mL). With CrCl ≈ `
+          + `${patientPk.crcl.toFixed(1)} mL/min and a terminal half-life of about `
+          + `${patientPk.tHalf.toFixed(0)} hours, this pattern suggests subtherapeutic `
+          + `exposure and potential loss of efficacy. In practice, clinicians might `
+          + `consider increasing the dose or shortening the dosing interval, guided by `
+          + `TDM and clinical response.`;
+      } else if (cmax > THER_HIGH) {
+        explain.textContent =
+          `This patient's steady-state peaks (Cmax,ss ≈ ${cmax.toFixed(2)} ng/mL) exceed `
+          + `the illustrative upper bound (${THER_HIGH} ng/mL), while the trough `
+          + `(Cmin,ss = ${cmin.toFixed(2)} ng/mL) remains relatively high. Combined with `
+          + `a reduced CrCl of ≈ ${patientPk.crcl.toFixed(1)} mL/min and a prolonged `
+          + `terminal half-life (t½β ≈ ${patientPk.tHalf.toFixed(0)} h), this pattern `
+          + `suggests accumulation and increased risk of digoxin toxicity (arrhythmia, `
+          + `bradycardia, visual disturbances). Dose reduction or prolonging the dosing `
+          + `interval would typically be considered in real practice.`;
+      } else {
+        explain.textContent =
+          `This patient's steady-state trough (Cmin,ss = ${cmin.toFixed(2)} ng/mL) lies `
+          + `within the illustrative therapeutic window (${THER_LOW}–${THER_HIGH} ng/mL), `
+          + `with peaks around ${cmax.toFixed(2)} ng/mL. For an older adult with CrCl ≈ `
+          + `${patientPk.crcl.toFixed(1)} mL/min and a terminal half-life of `
+          + `${patientPk.tHalf.toFixed(0)} hours, this profile suggests that exposure is `
+          + `broadly compatible with typical targets, although individualised TDM and `
+          + `clinical monitoring would still be essential in practice.`;
+      }
+
+      // update chart
+      updateChart(simPatient.t, simPatient.C, simRef.C);
+
+      // run educational dose optimisation and render table
+      const regimens = runDoseOptimization(age, weight, sex, scr);
+      renderOptimisationTable(regimens);
+    }
+
+    /****************************************************
+     * 9. Bootstrap
+     ****************************************************/
+    window.addEventListener("DOMContentLoaded", () => {
+      initChart();
+      document.getElementById("runBtn").addEventListener("click", runSimulation);
+      // auto-run once with defaults
+      runSimulation();
+    });
+  </script>
+</body>
+</html>
