@@ -1,5 +1,5 @@
 # Geriatric Digoxin PK Digital Twin
-### An Explainable, Patient-Specific Pharmacokinetic Simulator for Precision Geriatric Dosing
+: An Explainable, Patient-Specific Pharmacokinetic Simulator for Precision Geriatric Dosing
 
 ## Overview
 This project is a fully client-side, web-based **Explainable Pharmacokinetic Digital Twin** that simulates how **Digoxin** behaves in:
