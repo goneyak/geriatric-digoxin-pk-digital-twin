@@ -8,7 +8,7 @@ This project is a fully client-side, web-based **Explainable Pharmacokinetic Dig
 
 Digoxin has a **Narrow Therapeutic Index (NTI)**. Small concentration increases can cause toxicity (arrhythmia, bradycardia, visual disturbances). The simulator demonstrates why **population-based dosing fails** in older adults and why **individualized PK** is essential.
 
-👉 **Live Demo:** *(Add link)*
+👉 **Live Demo:**  https://goneyak.github.io/geriatric-digoxin-pk-digital-twin/version_2.html
 
 ---
 
