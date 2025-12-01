@@ -73,7 +73,7 @@ open version1.html   # or double-click
 
 ## 🧩 Versioned Modeling Assumptions
 
-### 🔹 Version 1.0 — Educational PK Model (Current)
+### 🔹 Version 1.0 — Educational PK Model
 - One-compartment IV bolus
 - Renal scaling:
   
@@ -86,7 +86,7 @@ V = TV_V × (weight/70)
 - Therapeutic range: 0.5–1.0 ng/mL  
 **Limitations:** No IIV, no Bayesian updating, no distribution phase
 
-### 🔹 Version 2.0 — Mechanistic PopPK (Planned)
+### 🔹 Version 2.0 — Mechanistic PopPK
 - Two-compartment model
 - PopPK covariate models
 - Inter-individual variability
